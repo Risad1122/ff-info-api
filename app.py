@@ -81,28 +81,22 @@ def proto_to_dict(message):
 
 
 def extract_token_from_response(data, region):
-    """Safely extract JWT token from API response."""
+    """Safely extract JWT token from API response universally."""
     if not isinstance(data, dict):
         return None
     
-    if "jwt_token" in data:
-        return data["jwt_token"]
-    if "token" in data:
-        return data["token"]
-        
-    if data.get("success") is True and "token" in data:
-        return data["token"]
-    
-    if region == "IND":
-        if data.get('status') in ['success', 'live']:
-            return data.get('token')
-    elif region in ["BR", "US", "SAC", "BD", "PK", "VN", "ME", "TH"]:
-        if 'token' in data:
-            return data['token']
-    else:
-        if data.get('status') == 'success':
-            return data.get('token')
-    
+    # Universal keys check
+    for key in ["jwt_token", "token", "access_token", "key"]:
+        if key in data and data[key]:
+            return data[key]
+            
+    # Nested data check
+    if "data" in data and isinstance(data["data"], dict):
+        sub_data = data["data"]
+        for key in ["jwt_token", "token", "access_token"]:
+            if key in sub_data and sub_data[key]:
+                return sub_data[key]
+                
     return None
 
 def ensure_jwt_token_sync(region):

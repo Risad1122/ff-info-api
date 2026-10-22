@@ -3,7 +3,8 @@ import requests
 
 app = Flask(__name__)
 
-SOURCE_API = "https://cyberarafat.lchost.site/ff-info.php"
+# নতুন সচল সোর্স API লিংক
+SOURCE_API = "https://glob-info2.vercel.app/info"
 
 @app.route("/ff-info")
 def ff_info():
@@ -32,8 +33,10 @@ def ff_info():
 @app.route("/")
 def root():
     return jsonify({
-        "status": "ok",
-        "usage": "/ff-info?uid=1782212746"
+        "status": "online",
+        "brand": "Record BD",
+        "developer": "Risad",
+        "usage": "/ff-info?uid=305000592"
     })
 
 if __name__ == "__main__":

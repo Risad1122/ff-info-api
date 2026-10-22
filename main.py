@@ -3,8 +3,8 @@ import requests
 
 app = Flask(__name__)
 
-# নতুন সচল সোর্স API লিংক
-SOURCE_API = "https://glob-info2.vercel.app/info"
+# WalkerZ er live API link
+SOURCE_API = "https://wzapi.vercel.app/player"
 
 @app.route("/ff-info")
 def ff_info():
@@ -36,7 +36,7 @@ def root():
         "status": "online",
         "brand": "Record BD",
         "developer": "Risad",
-        "usage": "/ff-info?uid=305000592"
+        "usage": "/ff-info?uid=1782212746"
     })
 
 if __name__ == "__main__":

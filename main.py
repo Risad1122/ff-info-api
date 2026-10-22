@@ -3,12 +3,13 @@ import requests
 
 app = Flask(__name__)
 
-# WalkerZ API er sothik endpoint
+# WalkerZ API endpoint
 SOURCE_API = "https://wzapi.vercel.app/get"
 
 @app.route("/ff-info")
 def ff_info():
     uid = request.args.get("uid", "").strip()
+    region = request.args.get("region", "SG").strip().upper()
 
     if not uid:
         return jsonify({"error": "uid parameter required"}), 400
@@ -16,11 +17,10 @@ def ff_info():
         return jsonify({"error": "uid must be numeric"}), 400
 
     try:
-        # WalkerZ API te parameter name 'player_id' ebong 'region' lagte pare
-        # Bangladesh/India region er jonno region="SG" ba "IND"
+        # WalkerZ API format: player_id & region
         r = requests.get(
             SOURCE_API, 
-            params={"player_id": uid, "region": "SG"}, 
+            params={"player_id": uid, "region": region}, 
             timeout=15
         )
         r.raise_for_status()
